@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="white" light>
-      <v-app-bar-nav-icon @click.stop="drawer != drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-badge color="orange" overlap>
@@ -59,6 +59,10 @@ export default {
     //
     value: 1,
     drawer: false,
+    menus: [
+      { title: 'Home', icon: 'mdi-home', route: '/' },
+      { title: 'About', icon: 'mdi-account', route: '/about' },
+    ],
   }),
 }
 </script>
