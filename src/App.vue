@@ -1,19 +1,64 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
-</template>
+  <v-app>
+    <v-app-bar app color="white" light>
+      <v-app-bar-nav-icon @click.stop="drawer != drawer"></v-app-bar-nav-icon>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-badge color="orange" overlap>
+          <template v-slot:badge>
+            <span>3</span>
+          </template>
+          <v-icon>mdi-cart</v-icon>
+        </v-badge>
+      </v-btn>
+    </v-app-bar>
 
-<style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+    <v-navigation-drawer app v-model="drawer">
+      Side Menu
+    </v-navigation-drawer>
+    <v-main>
+      <v-container fluid>
+        <router-view />
+      </v-container>
+    </v-main>
+    <v-footer></v-footer>
+    <v-bottom-navigation :value="value" color="primary" horizontal>
+      <v-btn>
+        <span>Recents</span>
+
+        <v-icon>mdi-history</v-icon>
+      </v-btn>
+
+      <v-btn>
+        <span>Favorites</span>
+
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn>
+        <span>Nearby</span>
+
+        <v-icon>mdi-map-marker</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
+  </v-app>
+</template>
+<style>
+.v-sheet.v-app-bar.v-toolbar:not(.v-sheet--outlined) {
+  box-shadow: none !important;
+}
+.v-item-group.v-bottom-navigation {
+  position: fixed;
+}
 </style>
+<script>
+export default {
+  name: 'App',
+
+  data: () => ({
+    //
+    value: 1,
+    drawer: false,
+  }),
+}
+</script>
