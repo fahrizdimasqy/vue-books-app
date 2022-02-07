@@ -1,0 +1,7 @@
+.v-sheet.v-app-bar.v-toolbar:not(.v-sheet--outlined) {
+  box-shadow: none !important;
+  border: none !important;
+}
+.v-item-group.v-bottom-navigation {
+  position: fixed;
+}
