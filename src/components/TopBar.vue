@@ -1,5 +1,18 @@
 <template>
-  <v-app>
+  <div>
+    <v-app-bar app color="white" light>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-badge color="orange" overlap>
+          <template v-slot:badge>
+            <span>3</span>
+          </template>
+          <v-icon>mdi-cart</v-icon>
+        </v-badge>
+      </v-btn>
+    </v-app-bar>
+
     <v-navigation-drawer app v-model="drawer">
       <v-list>
         <v-list-item v-if="!guest">
@@ -18,7 +31,7 @@
             <v-icon left>mdi-lock</v-icon>
             Login
           </v-btn>
-          <v-btn block color="success">
+          <v-btn block color="success" to="/register">
             <v-icon left>mdi-account</v-icon>
             Register
           </v-btn>
@@ -47,25 +60,18 @@
         </div>
       </template>
     </v-navigation-drawer>
-    <v-main>
-      <v-slide-y-transition>
-        <router-view />
-      </v-slide-y-transition>
-    </v-main>
-    <v-footer></v-footer>
-  </v-app>
+  </div>
 </template>
-<style>
-@import './assets/css/style.css';
-</style>
 <script>
 export default {
-  name: 'App',
-
+  name: 'TopBar',
   data: () => ({
-    //
-    value: 1,
-    selectedItem: 1,
+    drawer: false,
+    guest: true,
+    menus: [
+      { title: 'Home', icon: 'mdi-home', route: '/' },
+      { title: 'About', icon: 'mdi-account', route: '/about' },
+    ],
   }),
 }
 </script>

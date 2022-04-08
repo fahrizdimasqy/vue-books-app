@@ -1,40 +1,37 @@
 <template>
   <v-container>
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <h3 class="blue--text text-center mb-5">Form Login</h3>
-      <v-text-field
-        v-model="username"
-        :rules="usernameRules"
-        flat
-        label="Username"
-        solo-inverted
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        flat
-        label="Email"
-        solo-inverted
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="password"
-        :rules="passwordRules"
-        flat
-        label="Password"
-        solo-inverted
-        required
-      ></v-text-field>
-
-      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-        Validate
-      </v-btn>
-
-      <v-btn color="error" class="mr-4" @click="reset">
-        Reset Form
-      </v-btn>
-    </v-form>
+    <v-icon class="mt-5">mdi-arrow-left</v-icon>
+    <div class="mt-5">
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <h2 class="pink--text">Welcome Back</h2>
+        <p class="text--disabled">
+          I'm so happy to see. You can continue to login for buy books
+        </p>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          flat
+          label="Email"
+          solo-inverted
+          required
+        ></v-text-field>
+        <v-text-field
+          v-model="password"
+          :rules="passwordRules"
+          flat
+          label="Password"
+          solo-inverted
+          required
+        ></v-text-field>
+        <v-btn block large depressed color="pink" class="white--text">
+          Login
+        </v-btn>
+        <p class="mt-3 text-center text--disabled">
+          Don't have an account?
+          <a href="/register" class="pink--text mt-3">Register</a>
+        </p>
+      </v-form>
+    </div>
   </v-container>
 </template>
 <script>
