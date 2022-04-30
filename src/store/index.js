@@ -1,5 +1,9 @@
+// import { push } from 'core-js/core/array'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import cart from '@/stores/carts'
+import alert from '@/stores/alert'
+import auth from '@/stores/auth'
 
 Vue.use(Vuex)
 
@@ -16,6 +20,7 @@ export default new Vuex.Store({
       state.counter++
     },
   },
+
   // Actions bertugas meng-commit mutations.
   // Actions mendukung operasi asynchronous.
   // memanggil fungsi mutations
@@ -24,5 +29,10 @@ export default new Vuex.Store({
       context.commit('increment')
     },
   },
-  modules: {},
+  // menampung state yang dipecah
+  modules: {
+    cart,
+    alert,
+    auth,
+  },
 })

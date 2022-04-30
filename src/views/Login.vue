@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <v-icon class="mt-5">mdi-arrow-left</v-icon>
     <div class="mt-5">
       <v-form ref="form" v-model="valid" lazy-validation>
         <h2 class="pink--text">Welcome Back</h2>

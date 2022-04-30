@@ -1,13 +1,20 @@
 <template>
   <div class="overflow-hidden">
-    <TopBar />
     <v-container fluid class="mb-15">
       <h2>Discover</h2>
       <p class="text--disabled">
         Search your favorite book here
       </p>
-      <div class="d-flex">
-        <!-- <v-text-field
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="scaletransition"
+      >
+        <search @closed="closeDialog" />
+      </v-dialog>
+      <!-- <div class="d-flex"> -->
+      <!-- <v-text-field
           slot="extension"
           hide-details
           append-icon="mdi-microphone"
@@ -17,56 +24,75 @@
           solo-inverted
           class="mb-5"
         ></v-text-field> -->
-        <v-text-field
-          slot="extension"
-          hide-details
-          flat
-          label="Search"
-          solo-inverted
-          class="mb-5"
-        ></v-text-field>
-        <v-btn depressed color="pink" large class="ml-2">
+      <v-text-field
+        slot="extension"
+        hide-details
+        flat
+        label="Search"
+        solo-inverted
+        class="mb-5"
+        @click="dialog = true"
+      ></v-text-field>
+      <!-- <v-btn depressed color="pink" large class="ml-2">
           <v-icon color="white">mdi-magnify</v-icon>
-        </v-btn>
-      </div>
+        </v-btn> -->
+      <!-- </div> -->
 
       <!-- Favorite -->
 
       <div class="d-flex justify-space-between mt-5">
         <h2>Best Seller</h2>
-        <v-btn small text to="/books" class="pink--text text-right">
+        <!-- <v-btn small text to="/books" class="pink--text text-right">
           Favorite
           <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
+        </v-btn> -->
       </div>
 
-      <v-slide-group v-model="model" class="mb-4" multiple c>
-        <v-slide-item v-for="n in 15" :key="n" v-slot="{ active, toggle }">
-          <div class="ma-2 mb-8" height="200" width="100" @click="toggle">
-            <v-img
-              width="100"
-              height="150"
-              aspect-ratio="1.7"
-              lazy-src="https://picsum.photos/id/11/10/6"
-              src="https://images.tokopedia.net/img/cache/700/VqbcmM/2020/9/29/d5c0f94f-72d0-42d4-ab44-0dda563114f1.jpg"
-              class="rounded-lg"
-            ></v-img>
-            <div class="mt-2">
-              <div class="body">The 100$ Startup</div>
-              <div class="subtitle1">Chris Guillebeau</div>
-              <div>Rp. 129.000</div>
+      <v-slide-group class="mb-4" multiple c>
+        <v-slide-item
+          v-for="topBook in topBooks"
+          :key="topBook.id"
+          v-slot="{ active, toggle }"
+        >
+          <v-card :to="'/book/' + topBook.slug">
+            <div class="ma-2 mb-8" height="200" width="100" @click="toggle">
+              <v-img
+                width="100"
+                height="150"
+                aspect-ratio="1.7"
+                :src="getImage('/books/' + topBook.cover)"
+                class="rounded-lg"
+              ></v-img>
+              <div class="mt-2">
+                <div
+                  class="body text-truncate font-weight-black text-h5"
+                  value="h1"
+                  style="max-width: 120px;"
+                >
+                  {{ topBook.title }}
+                </div>
+                <div
+                  class="subtitle1 text--disabled text-truncate text-body-1"
+                  style="max-width: 100px;"
+                >
+                  {{ topBook.author }}
+                </div>
+                <div class="text-sm-left pink--text">
+                  Rp.{{ topBook.price.toLocaleString('id-ID') }}
+                </div>
+              </div>
+              <v-row class="fill-height" align="center" justify="center">
+                <v-scale-transition>
+                  <v-icon
+                    v-if="active"
+                    color="white"
+                    size="48"
+                    v-text="'mdi-close-circle-outline'"
+                  ></v-icon>
+                </v-scale-transition>
+              </v-row>
             </div>
-            <v-row class="fill-height" align="center" justify="center">
-              <v-scale-transition>
-                <v-icon
-                  v-if="active"
-                  color="white"
-                  size="48"
-                  v-text="'mdi-close-circle-outline'"
-                ></v-icon>
-              </v-scale-transition>
-            </v-row>
-          </div>
+          </v-card>
         </v-slide-item>
       </v-slide-group>
 
@@ -94,81 +120,42 @@
       <!-- Akhir Favorite -->
 
       <div class="d-flex justify-space-between mt-10 mb-5">
-        <h2>Best Popular</h2>
+        <h2>Recent</h2>
         <v-btn small text to="/books" class="pink--text">
           See All
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </div>
-      <v-row>
-        <v-col cols="4">
-          <v-img
-            height="150"
-            lazy-src="https://picsum.photos/id/11/10/6"
-            src="http://blokbojonegoro.com/upload/Image/image_74_img_20180623_081356.jpg"
-            class="rounded-lg"
-          ></v-img>
-        </v-col>
-        <v-col cols="8">
-          <div class="mt-5">
-            <div class="body">Dilan 1990</div>
-            <div class="subtitle1">dividi Baiq</div>
-            <div>333</div>
-            <div>Rp. 129.000</div>
-          </div>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="4">
-          <v-img
-            height="150"
-            lazy-src="https://picsum.photos/id/11/10/6"
-            src="http://blokbojonegoro.com/upload/Image/image_74_img_20180623_081356.jpg"
-            class="rounded-lg"
-          ></v-img>
-        </v-col>
-        <v-col cols="8">
-          <div class="mt-5">
-            <div class="body">Dilan 1990</div>
-            <div class="subtitle1">dividi Baiq</div>
-            <div>333</div>
-            <div>Rp. 129.000</div>
-          </div>
-        </v-col>
-      </v-row>
+      <div v-for="book in books" :key="book.id">
+        <book-item :book="book"></book-item>
+      </div>
     </v-container>
     <BotomBavigation />
   </div>
 </template>
-<style>
-.v-card__text {
-  color: #1976d2 !important;
-}
-.pink {
-  color: #f06292 !important;
-}
-</style>
+
 <script>
-import TopBar from '../components/TopBar'
+// import TopBar from '../components/TopBar'
 import BotomBavigation from '../components/BottomNavigation.vue'
+import BookItem from '../components/BookItem.vue'
 // import VueSlickCarousel from 'vue-slick-carousel'
 
 export default {
   name: 'Home',
   components: {
-    TopBar,
+    // TopBar,
+    BookItem,
     BotomBavigation,
+    Search: () =>
+      import(/* webpackChunkName: "search" */ '@/components/Search.vue'),
     // VueSlickCarousel,
   },
   data: () => {
     return {
-      books: {
-        judul: 'Virtual Tour Candi Prambanan',
-        lokasi: 'Sleman, Yogyakarta',
-        url_gambar: 'https://imgur.com/w1239.jpg',
-        harga: 35000,
-        score: 3.9,
-      },
+      categories: [],
+      books: [],
+      topBooks: [],
+      dialog: false,
       settings: {
         arrows: false,
         infinite: false,
@@ -208,41 +195,46 @@ export default {
           },
         ],
       },
-      cards: [
-        // {
-        //   title: 'Pre-fab homes',
-        //   src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg',
-        //   flex: 12,
-        // },
-        {
-          title: 'Laravel Book',
-          src:
-            'https://res.cloudinary.com/practicaldev/image/fetch/s--nocQYReD--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/http://anastasionico.uk/img/blog/the-code-behind-laravel-6.jpg',
-          flex: 6,
-          price: 'Rp. 90.000',
-        },
-        {
-          title: 'React Book',
-          src: 'https://miro.medium.com/max/1000/0*aHvK7Rbt_Dv74mWq.png',
-          flex: 6,
-          price: 'Rp. 190.000',
-        },
-      ],
-      items: [
-        {
-          color: '#1F7087',
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          title: 'Supermodel',
-          artist: 'Foster the People',
-        },
-        {
-          color: '#952175',
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Halcyon Days',
-          artist: 'Ellie Goulding',
-        },
-      ],
     }
+  },
+  methods: {
+    closeDialog(value) {
+      this.dialog = value
+    },
+  },
+
+  created() {
+    this.axios
+      .get('/books/top/4')
+      .then((response) => {
+        let { data } = response.data
+        this.topBooks = data
+      })
+      .catch((error) => {
+        let { response } = error
+        console.log(response)
+      }),
+      this.axios
+        .get('/books/random/4')
+        .then((response) => {
+          let { data } = response.data
+          this.books = data
+        })
+        .catch((error) => {
+          let { response } = error
+          console.log(response)
+        })
   },
 }
 </script>
+<style scoped>
+.v-sheet.v-card:not(.v-sheet--outlined) {
+  box-shadow: none;
+}
+.v-card__text {
+  color: #1976d2 !important;
+}
+.pink {
+  color: #f06292 !important;
+}
+</style>

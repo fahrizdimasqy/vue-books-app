@@ -5,3 +5,8 @@
 .v-item-group.v-bottom-navigation {
   position: fixed;
 }
+
+.pink {
+  background-color: #e91e63 !important;
+  color: white !important;
+}

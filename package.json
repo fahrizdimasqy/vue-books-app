@@ -14,6 +14,7 @@
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-axios": "^3.4.0",
+    "vue-plugin-axios": "^1.0.14",
     "vue-router": "^3.2.0",
     "vue-slick-carousel": "^1.0.6",
     "vuetify": "^2.4.0",

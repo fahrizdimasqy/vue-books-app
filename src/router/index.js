@@ -32,10 +32,16 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../views/Register.vue'),
   },
   {
-    path: '/detail',
-    name: 'DetailPage',
+    path: '/book/:slug',
+    name: 'book',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/DetailPage.vue'),
+      import(/* webpackChunkName: "about" */ '../views/Book.vue'),
+  },
+  {
+    path: '/books',
+    name: 'Books',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Books.vue'),
   },
   {
     path: '/increment',
