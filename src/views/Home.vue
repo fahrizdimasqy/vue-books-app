@@ -5,14 +5,20 @@
       <p class="text--disabled">
         Search your favorite book here
       </p>
-      <v-dialog
-        v-model="dialog"
-        fullscreen
-        hide-overlay
-        transition="scaletransition"
-      >
-        <search @closed="closeDialog" />
-      </v-dialog>
+      <keep-alive>
+        <v-dialog
+          v-model="dialog"
+          fullscreen
+          hide-overlay
+          transition="dialogbottom-transition"
+        >
+          <component
+            :is="currentComponent"
+            @closed="setDialogStatus"
+          ></component>
+          <!-- <search @closed="closeDialog" /> -->
+        </v-dialog>
+      </keep-alive>
       <!-- <div class="d-flex"> -->
       <!-- <v-text-field
           slot="extension"
@@ -138,6 +144,7 @@
 // import TopBar from '../components/TopBar'
 import BotomBavigation from '../components/BottomNavigation.vue'
 import BookItem from '../components/BookItem.vue'
+import { mapActions, mapGetters } from 'vuex'
 // import VueSlickCarousel from 'vue-slick-carousel'
 
 export default {
@@ -155,7 +162,7 @@ export default {
       categories: [],
       books: [],
       topBooks: [],
-      dialog: false,
+      // dialog: false,
       settings: {
         arrows: false,
         infinite: false,
@@ -197,7 +204,25 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapGetters({
+      dialogStatus: 'dialog/status',
+      currentComponent: 'dialog/component',
+    }),
+    dialog: {
+      set(value) {
+        return this.setDialogStatus(value)
+      },
+      get() {
+        return this.dialogStatus
+      },
+    },
+  },
   methods: {
+    ...mapActions({
+      setDialogStatus: 'dialog/setStatus',
+      setDialogComponent: 'dialog/setComponent',
+    }),
     closeDialog(value) {
       this.dialog = value
     },

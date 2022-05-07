@@ -99,7 +99,6 @@ export default {
     value: 1,
     selectedItem: 1,
     drawer: false,
-    guest: true,
     menus: [
       { title: 'Home', icon: 'mdi-home', route: '/' },
       { title: 'About', icon: 'mdi-account', route: '/about' },
@@ -111,6 +110,8 @@ export default {
     },
     ...mapGetters({
       countCart: 'cart/count',
+      guest: 'auth/guest',
+      user: 'auth/user',
     }),
   },
 }
