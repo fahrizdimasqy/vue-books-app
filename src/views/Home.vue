@@ -1,6 +1,9 @@
 <template>
   <div class="overflow-hidden">
-    <v-container fluid class="mb-15">
+    <div v-if="loading">
+      <home-loading />
+    </div>
+    <v-container fluid class="mb-15" v-else>
       <h2>Discover</h2>
       <p class="text--disabled">
         Search your favorite book here
@@ -37,7 +40,7 @@
         label="Search"
         solo-inverted
         class="mb-5"
-        @click="dialog = true"
+        @click="setDialogComponent('search')"
       ></v-text-field>
       <!-- <v-btn depressed color="pink" large class="ml-2">
           <v-icon color="white">mdi-magnify</v-icon>
@@ -102,27 +105,6 @@
         </v-slide-item>
       </v-slide-group>
 
-      <!-- <VueSlickCarousel v-bind="settings">
-        <div v-for="i in 10" :key="i">
-          <v-img
-            width="100"
-            lazy-src="https://picsum.photos/id/11/10/6"
-            src="https://picsum.photos/id/11/500/300"
-            class="rounded-lg"
-          ></v-img>
-          <p>test</p>
-        </div>
-      </VueSlickCarousel> -->
-      <!-- <v-col>
-            <v-img
-              lazy-src="https://picsum.photos/id/11/10/6"
-              src="https://picsum.photos/id/11/500/300"
-              class="rounded-lg"
-            ></v-img>
-            <h3 class="">Pengetahuan Alam</h3>
-            <p>By Fahriz</p>
-          </v-col> -->
-
       <!-- Akhir Favorite -->
 
       <div class="d-flex justify-space-between mt-10 mb-5">
@@ -144,6 +126,7 @@
 // import TopBar from '../components/TopBar'
 import BotomBavigation from '../components/BottomNavigation.vue'
 import BookItem from '../components/BookItem.vue'
+import homeloading from '../components/HomeSkeleton.vue'
 import { mapActions, mapGetters } from 'vuex'
 // import VueSlickCarousel from 'vue-slick-carousel'
 
@@ -153,12 +136,14 @@ export default {
     // TopBar,
     BookItem,
     BotomBavigation,
+    'home-loading': homeloading,
     Search: () =>
       import(/* webpackChunkName: "search" */ '@/components/Search.vue'),
     // VueSlickCarousel,
   },
   data: () => {
     return {
+      loading: false,
       categories: [],
       books: [],
       topBooks: [],
@@ -229,11 +214,13 @@ export default {
   },
 
   created() {
+    this.loading = !false
     this.axios
       .get('/books/top/4')
       .then((response) => {
         let { data } = response.data
         this.topBooks = data
+        this.loading = false
       })
       .catch((error) => {
         let { response } = error

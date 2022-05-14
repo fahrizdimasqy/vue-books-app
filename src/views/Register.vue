@@ -27,12 +27,7 @@
         solo-inverted
         required
       ></v-text-field>
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[(v) => !!v || 'You must agree to continue!']"
-        label=" I have read and agree with terms and conditions"
-        required
-      ></v-checkbox>
+
       <v-btn block large depressed color="pink" class="white--text">
         Create Account
       </v-btn>

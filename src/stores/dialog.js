@@ -5,10 +5,10 @@ export default {
     component: 'search',
   },
   mutations: {
-    setStatus(state, status) {
+    setStatus: (state, status) => {
       state.status = status
     },
-    setComponent(state, component) {
+    setComponent: (state, component) => {
       state.component = component
     },
   },
@@ -18,6 +18,7 @@ export default {
     },
     setComponent: ({ commit }, component) => {
       commit('setComponent', component)
+      commit('setStatus', true)
     },
   },
   getters: {
