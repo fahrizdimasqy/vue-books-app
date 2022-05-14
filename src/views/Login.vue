@@ -110,6 +110,7 @@ export default {
                 color: 'error',
                 text: 'Login failed',
               })
+              this.loading = false
             }
           })
           .catch((error) => {
@@ -126,7 +127,6 @@ export default {
     close() {
       this.$emit('closed', false)
     },
-    logout() {},
   },
 }
 </script>

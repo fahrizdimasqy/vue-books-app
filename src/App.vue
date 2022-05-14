@@ -76,6 +76,13 @@
             Logout
           </v-btn>
         </div>
+        <div v-if="loading">
+          <v-img
+            src="https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"
+            width="50"
+            class="mx-auto"
+          ></v-img>
+        </div>
       </template>
     </v-navigation-drawer>
     <alert />
@@ -100,6 +107,7 @@ export default {
   },
   data: () => ({
     //
+    loading: false,
     value: 1,
     selectedItem: 1,
     drawer: false,
@@ -141,7 +149,34 @@ export default {
       setAuth: 'auth/set',
       setAlert: 'alert/set',
     }),
-    logout() {},
+    logout() {
+      this.loading = !false
+      let config = {
+        headers: {
+          Authorization: 'Bearer ' + this.user.api_token,
+        },
+      }
+      this.axios
+        .post('/logout', {}, config)
+        .then(() => {
+          this.setAuth({})
+          this.setAlert({
+            status: true,
+            color: 'success',
+            text: 'Logout successfully',
+          })
+          this.loading = false
+        })
+        .catch((error) => {
+          let { data } = error.response
+          this.setAlert({
+            status: true,
+            color: 'error',
+            text: data.message,
+          })
+          this.loading = !false
+        })
+    },
   },
 }
 </script>
