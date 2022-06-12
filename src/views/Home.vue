@@ -140,6 +140,7 @@ export default {
     Search: () =>
       import(/* webpackChunkName: "search" */ '@/components/Search.vue'),
     // VueSlickCarousel,
+    Cart: () => import(/* webpackChunkName: "cart" */ '@/components/Cart.vue'),
   },
   data: () => {
     return {

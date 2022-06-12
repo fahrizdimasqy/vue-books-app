@@ -29,6 +29,9 @@ export default {
         state.carts.splice(idx, 1)
       }
     },
+    set: (state, payload) => {
+      state.carts = payload
+    },
   },
   actions: {
     // mendeteksi apakah data yang diinput ada pada carts?
@@ -44,11 +47,43 @@ export default {
         commit('update', cartItem)
       }
     },
+    remove: ({ state, commit }, payload) => {
+      let cartItem = state.carts.find((item) => item.id === payload.id)
+      if (cartItem) {
+        cartItem.item--
+        commit('upadte', cartItem)
+      }
+    },
+    set: (state, payload) => {
+      state.carts = payload
+    },
   },
+
   getters: {
     carts: (state) => state.carts,
     count: (state) => {
       return state.carts.length
+    },
+    totalPrice: (state) => {
+      let total = 0
+      state.carts.foreEach(function (cart) {
+        total += cart.price * cart.quantity
+      })
+      return total
+    },
+    totalQuantity: (state) => {
+      let total = 0
+      state.carts.foreEach(function (cart) {
+        total += cart.quantity
+      })
+      return total
+    },
+    totalWeight: (state) => {
+      let total = 0
+      state.carts.foreEach(function (cart) {
+        total += cart.weight
+      })
+      return total
     },
   },
 }

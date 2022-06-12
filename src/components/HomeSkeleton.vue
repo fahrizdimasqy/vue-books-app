@@ -69,7 +69,6 @@
         </v-card>
       </div>
     </v-container>
-    <BotomBavigation />
   </div>
 </template>
 

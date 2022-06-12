@@ -3,7 +3,7 @@
     <v-app-bar app color="white" light v-if="isHome">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-btn icon>
+      <v-btn icon @click="setDialogComponent('cart')">
         <v-badge color="pink" overlap>
           <template v-slot:badge v-if="countCart > 0">
             <span class="white--text">{{ countCart }}</span>
@@ -23,7 +23,7 @@
         <v-icon>mdi-arrow-left-circle</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn icon>
+      <v-btn icon @click="setDialogComponent('cart')">
         <v-badge color="pink" overlap>
           <template v-slot:badge v-if="countCart > 0">
             <span class="white--text">{{ countCart }}</span>
@@ -86,7 +86,17 @@
       </template>
     </v-navigation-drawer>
     <alert />
-
+    <keep-alive>
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialogbottom-transition"
+      >
+        <component :is="currentComponent" @closed="setDialogStatus"></component>
+        <!-- <cart @closed="closeDialog" /> -->
+      </v-dialog>
+    </keep-alive>
     <v-main>
       <v-slide-y-transition>
         <router-view />
@@ -100,10 +110,15 @@
 </style>
 <script>
 import { mapActions, mapGetters } from 'vuex'
+// import Cart from './components/Cart.vue'
 export default {
   name: 'App',
   components: {
     Alert: () => import('@/components/Alert.vue'),
+    // Cart:()=> import ('@/components/Cart.vue')
+    Cart: () => import(/* webpackChunkName: "cart" */ '@/components/Cart.vue'),
+    Search: () =>
+      import(/* webpackChunkName: "search" */ '@/components/Search.vue'),
   },
   data: () => ({
     //
@@ -122,6 +137,7 @@ export default {
       guest: 'auth/guest',
       user: 'auth/user',
       dialogStatus: 'dialog/status',
+      currentComponent: 'dialog/component',
     }),
     isHome() {
       return this.$route.path === '/'
@@ -134,11 +150,11 @@ export default {
       return this.$route.path === '/register'
     },
     dialog: {
-      set(value) {
-        return this.setDialogStatus(value)
-      },
       get() {
         return this.dialogStatus
+      },
+      set(value) {
+        return this.setDialogStatus(value)
       },
     },
   },
@@ -149,6 +165,9 @@ export default {
       setAuth: 'auth/set',
       setAlert: 'alert/set',
     }),
+    closeDialog(value) {
+      this.dialog = value
+    },
     logout() {
       this.loading = !false
       let config = {

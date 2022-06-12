@@ -8,6 +8,7 @@
         hide-details
         append-icon="mdi-microphone"
         flat
+        autofocus
         label="Search"
         prepend-inner-icon="mdi-magnify"
         v-model="keyword"
@@ -45,6 +46,7 @@ export default {
     return {
       keyword: '',
       books: [],
+      // autofocus: false,
     }
   },
   methods: {
