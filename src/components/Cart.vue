@@ -28,7 +28,7 @@
                   }}
                   kg)
                   <span style="float: right;">
-                    <v-btn
+                    <!-- <v-btn
                       icon
                       small
                       rounded
@@ -36,23 +36,72 @@
                       @click.stop="removeCart(item)"
                     >
                       <v-icon light color="error">mdi-minuscircle</v-icon>
+                    </v-btn> -->
+                    <v-btn
+                      class="mx-2"
+                      fab
+                      dark
+                      small
+                      color="error"
+                      depressed
+                      @click.stop="removeCart(item)"
+                    >
+                      <v-icon dark>
+                        mdi-minus
+                      </v-icon>
                     </v-btn>
                     {{ item.quantity }}
                     <v-btn
+                      class="mx-2"
+                      fab
+                      dark
+                      small
+                      color="primary"
+                      depressed
+                      @click.stop="addCart(item)"
+                    >
+                      <v-icon dark>
+                        mdi-plus
+                      </v-icon>
+                    </v-btn>
+                    <!-- <v-btn
                       icon
                       small
                       rounded
                       depressed
                       @click.stop="addCart(item)"
                     >
-                      <v-icon light color="success">mdi-pluscircle</v-icon>
-                    </v-btn>
+                      <v-icon dark color="success">mdi-pluscircle</v-icon>
+                    </v-btn> -->
                   </span>
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </template>
         </v-list>
+        <v-card>
+          <v-card-text>
+            <v-layout wrap>
+              <v-flex pa-1 xs6>
+                Total Price ({{ totalQuantity }} items)
+                <br />
+                <span class="title">
+                  Rp. {{ totalPrice.toLocaleString('id-ID') }}
+                </span>
+              </v-flex>
+              <v-flex pa-1 xs6 text-right>
+                <v-btn
+                  color="primary"
+                  @click="checkout"
+                  :disabled="totalQuantity == 0"
+                >
+                  <v-icon>mdi-cart-arrow-right</v-icon>
+                  &nbsp; Checkout
+                </v-btn>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+        </v-card>
       </v-container>
       <h1></h1>
     </v-card>

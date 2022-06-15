@@ -76,6 +76,7 @@ export default {
   computed: {
     ...mapGetters({
       user: 'auth/user',
+      prevUrl: 'prevUrl',
     }),
   },
   methods: {
@@ -102,6 +103,7 @@ export default {
                 text: 'Login success',
               })
               this.loading = false
+              // if (this.prevUrl.length > 0) this.$router.push(this.prevUrl)
               this.$router.push({ name: 'Home' })
               this.close()
             } else {

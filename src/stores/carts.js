@@ -50,8 +50,8 @@ export default {
     remove: ({ state, commit }, payload) => {
       let cartItem = state.carts.find((item) => item.id === payload.id)
       if (cartItem) {
-        cartItem.item--
-        commit('upadte', cartItem)
+        cartItem.quantity--
+        commit('update', cartItem)
       }
     },
     set: (state, payload) => {
@@ -66,21 +66,21 @@ export default {
     },
     totalPrice: (state) => {
       let total = 0
-      state.carts.foreEach(function (cart) {
+      state.carts.forEach(function (cart) {
         total += cart.price * cart.quantity
       })
       return total
     },
     totalQuantity: (state) => {
       let total = 0
-      state.carts.foreEach(function (cart) {
+      state.carts.forEach(function (cart) {
         total += cart.quantity
       })
       return total
     },
     totalWeight: (state) => {
       let total = 0
-      state.carts.foreEach(function (cart) {
+      state.carts.forEach(function (cart) {
         total += cart.weight
       })
       return total

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -45,6 +46,13 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../views/Books.vue'),
   },
   {
+    path: '/checkout',
+    name: 'checkout',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Checkout.vue'),
+    meta: { auth: true },
+  },
+  {
     path: '/increment',
     name: 'Increment',
     component: () =>
@@ -56,6 +64,25 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+})
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.auth)) {
+    if (store.getters['auth/guest']) {
+      store.dispatch('alert/set', {
+        status: true,
+        text: 'Login first',
+        color: 'error',
+      })
+      // tampilkan form login
+      store.dispatch('setPrevUrl', to.path)
+      router.push('/login')
+      // store.dispatch('dialog/setStatus', true)
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
