@@ -129,7 +129,7 @@ export default {
     }),
     checkout() {
       this.close()
-      this.$router.push({ path: '/checkout' })
+      this.$router.push({ path: '/checkout' }).catch(() => {})
     },
     close() {
       this.$emit('closed', false)

@@ -13,10 +13,12 @@ export default new Vuex.Store({
   state: {
     counter: 0,
     preveUrl: '',
+    payment: []
   },
   getters: {
     counter: (state) => state.counter,
     prevUrl: (state) => state.prevUrl,
+    payment: state => state.payment,
   },
   //  kumpulan fungsi untuk memanipulasi state atau bisa juga disebut sebagai setter
   mutations: {
@@ -26,6 +28,10 @@ export default new Vuex.Store({
     setPrevUrl: (state, value) => {
       state.preveUrl = value
     },
+    setPayment: (state, value) => {
+      state.payment = value
+      },
+     
   },
 
   // Actions bertugas meng-commit mutations.
@@ -38,6 +44,10 @@ export default new Vuex.Store({
     setPrevUrl: ({ commit }, value) => {
       commit('setPrevUrl', value)
     },
+    setPayment: ({commit}, value) => {
+      commit('setPayment', value)
+      },
+     
   },
   // menampung state yang dipecah
   modules: {
